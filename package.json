@@ -1,0 +1,48 @@
+{
+  "name": "rt-admin",
+  "version": "0.0.1",
+  "description": "react admin theme based on react-toolbox",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/palamccc/rt-admin.git"
+  },
+  "author": "palam.c@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/palamccc/rt-admin/issues"
+  },
+  "homepage": "https://github.com/palamccc/rt-admin#readme",
+  "scripts": {
+    "webpack": "NODE_ENV=development webpack-dev-server --inline --hot --port=4000",
+    "build": "NODE_ENV=production webpack"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.4.0",
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "classnames": "^2.2.5",
+    "css-loader": "^0.23.1",
+    "express": "^4.14.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "html-webpack-plugin": "^2.22.0",
+    "node-sass": "^3.8.0",
+    "normalize.css": "^4.2.0",
+    "postcss": "^5.1.2",
+    "postcss-loader": "^0.10.0",
+    "react": "^15.3.0",
+    "react-addons-css-transition-group": "^15.3.0",
+    "react-addons-update": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "react-hot-loader": "^1.3.0",
+    "react-toolbox": "^1.1.2",
+    "sass-loader": "^4.0.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.12.2"
+  }
+}

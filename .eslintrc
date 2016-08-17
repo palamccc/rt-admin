@@ -1,0 +1,10 @@
+{
+  "extends": "airbnb",
+  "rules":{
+    "no-console": 0,
+    "no-use-before-define":  [2, "nofunc"],
+    "strict": [0, "global"],
+    "no-else-return": 0,
+    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 4 }]
+  }
+}
