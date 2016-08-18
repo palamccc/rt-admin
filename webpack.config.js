@@ -1,9 +1,8 @@
 'use strict';
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const path = require('path');
 
 const NODE_ENV = process.env.NODE_ENV;
 const isDev = NODE_ENV === 'development';
@@ -28,13 +27,13 @@ if (!isDev) {
 }
 
 plugins.push(new HtmlWebpackPlugin({ template: 'src/index.html' }));
-plugins.push(new ExtractTextPlugin('index.css?[hash]', { allChunks: true }));
+// plugins.push(new ExtractTextPlugin('index.css?[hash]', { allChunks: true }));
 
 const cssLoaderQuery = [
   'sourceMap',
   'modules',
-  'importLoaders=1',
-  'localIdentName=[name]__[local]___[hash:base64:5]',
+  'importLoaders=1', // this will actually skip next 1 loader (postcss-loader) for all @imports
+  'localIdentName=[name]-[local]-[hash:base64:3]',
 ];
 
 module.exports = {
@@ -43,7 +42,7 @@ module.exports = {
     path: './static',
     filename: 'index.js?[hash]',
     chunkFilename: 'chunk.[id].js?[hash]',
-    publicPath: '/static/',
+    publicPath: '/',
   },
   module: {
     loaders: [
@@ -51,14 +50,18 @@ module.exports = {
         test: /.*jsx?$/,
         exclude: /node_modules/,
         loaders: (isDev ? ['react-hot-loader'] : [])
-                    .concat(['babel-loader?presets[]=react,presets[]=stage-0,presets[]=es2015']),
+                    .concat(['babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react']),
       },
       {
         test: /\.s?css$/,
-        loader: ExtractTextPlugin.extract('style-loader', [
+        loaders: ['style-loader',
           `css-loader?${cssLoaderQuery.join('&')}`,
           'postcss-loader',
-          'sass-loader']),
+          'sass-loader'],
+        // loader: ExtractTextPlugin.extract('style-loader', [
+        //   `css-loader?${cssLoaderQuery.join('&')}`,
+        //   'postcss-loader',
+        //   'sass-loader']),
       },
       {
         test: /\.(gif|jpg|png)$/,
@@ -76,6 +79,7 @@ module.exports = {
       },
     ],
   },
+  sassLoader: { data: '@import "./src/theme/_config.scss";' },
   postcss: [autoprefixer],
   plugins,
 };

@@ -1,7 +1,9 @@
+'use strict';
+/* global document */
+import 'react-toolbox/lib/commons.scss';
+import 'react-toolbox/lib/font_icon';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from 'react-toolbox/lib/button';
+import App from './app.jsx';
 
-const App = () => <div><div><Button label="Primary Button" primary /></div></div>;
-/* global document */
 ReactDOM.render(<App />, document.getElementById('app'));

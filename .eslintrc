@@ -5,6 +5,7 @@
     "no-use-before-define":  [2, "nofunc"],
     "strict": [0, "global"],
     "no-else-return": 0,
-    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 4 }]
+    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 4 }],
+    "react/prop-types": 0,
   }
 }
