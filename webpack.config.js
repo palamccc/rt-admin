@@ -1,7 +1,7 @@
 'use strict';
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -24,10 +24,13 @@ if (!isDev) {
       output: { comments: false },
     })
   );
+  plugins.push(new ExtractTextPlugin('index.css?[hash]', { allChunks: true }));
 }
 
-plugins.push(new HtmlWebpackPlugin({ template: 'src/index.html' }));
-// plugins.push(new ExtractTextPlugin('index.css?[hash]', { allChunks: true }));
+plugins.push(new HtmlWebpackPlugin({
+  template: 'src/index.html',
+  minify: isDev ? false : { collapseWhitespace: true },
+}));
 
 const cssLoaderQuery = [
   'sourceMap',
@@ -35,6 +38,22 @@ const cssLoaderQuery = [
   'importLoaders=1', // this will actually skip next 1 loader (postcss-loader) for all @imports
   'localIdentName=[name]-[local]-[hash:base64:3]',
 ];
+
+const cssChainLoader = { test: /\.s?css$/ };
+if (isDev) {
+  cssChainLoader.loaders = [
+    'style-loader',
+    `css-loader?${cssLoaderQuery.join('&')}`,
+    'postcss-loader',
+    'sass-loader',
+  ];
+} else {
+  cssChainLoader.loader = ExtractTextPlugin.extract('style-loader', [
+    `css-loader?${cssLoaderQuery.join('&')}`,
+    'postcss-loader',
+    'sass-loader',
+  ]);
+}
 
 module.exports = {
   entry: './src/index.jsx',
@@ -46,22 +65,12 @@ module.exports = {
   },
   module: {
     loaders: [
+      cssChainLoader,
       {
         test: /.*jsx?$/,
         exclude: /node_modules/,
         loaders: (isDev ? ['react-hot-loader'] : [])
                     .concat(['babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react']),
-      },
-      {
-        test: /\.s?css$/,
-        loaders: ['style-loader',
-          `css-loader?${cssLoaderQuery.join('&')}`,
-          'postcss-loader',
-          'sass-loader'],
-        // loader: ExtractTextPlugin.extract('style-loader', [
-        //   `css-loader?${cssLoaderQuery.join('&')}`,
-        //   'postcss-loader',
-        //   'sass-loader']),
       },
       {
         test: /\.(gif|jpg|png)$/,
