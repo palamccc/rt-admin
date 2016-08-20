@@ -1,10 +1,11 @@
 'use strict';
 import React from 'react';
+import Port from './port.jsx';
 import { getDistance } from './point-utils';
 
 const WIDTH = 150;
-const HEIGHT = 70;
-const PORT_RADIUS = HEIGHT / 10;
+const HEIGHT = 50;
+const PORT_RADIUS = 12;
 const STROKE_WIDTH = 1;
 
 function isInsideRect(pt, x, y, w, h) {
@@ -32,8 +33,8 @@ export function isInside(block, pt) {
 
 export function getPoint(block, where) {
   const pos = block.pos;
-  if (where === 'in-port') return { x: pos.x, y: pos.y + (HEIGHT / 2) };
-  else if (where === 'out-port') return { x: pos.x + WIDTH, y: pos.y + (HEIGHT / 2) };
+  if (where === 'in-port') return { x: pos.x - 6, y: pos.y + (HEIGHT / 2) };
+  else if (where === 'out-port') return { x: pos.x + WIDTH + 6, y: pos.y + (HEIGHT / 2) };
   else throw new Error(`unknown where ${where}`);
 }
 
@@ -55,33 +56,18 @@ export function Block(props) {
       />
       <text
         fontFamily="Roboto"
-        fontSize="16"
+        fontSize="14"
         x={pos.x + (WIDTH / 2)}
         y={pos.y + (HEIGHT / 2) + 6}
         width={WIDTH}
         textAnchor="middle"
         strokeWidth={0}
-        fill="#000000">
+        fill="#000000"
+      >
         Block {props.tag}
       </text>
-      <ellipse
-        ry={PORT_RADIUS}
-        rx={PORT_RADIUS}
-        cx={pos.x}
-        cy={pos.y + (HEIGHT / 2)}
-        strokeWidth={STROKE_WIDTH}
-        stroke="#000"
-        fill="#00bfbf"
-      />
-      <ellipse
-        ry={PORT_RADIUS}
-        rx={PORT_RADIUS}
-        cx={pos.x + WIDTH}
-        cy={pos.y + (HEIGHT / 2)}
-        strokeWidth={STROKE_WIDTH}
-        stroke="#000"
-        fill="#00bfbf"
-      />
+      <Port pos={{ x: pos.x, y: (pos.y + (HEIGHT / 2)) }} />
+      <Port pos={{ x: (pos.x + WIDTH), y: (pos.y + (HEIGHT / 2)) }} />
     </g>
   );
 }

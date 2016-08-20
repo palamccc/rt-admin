@@ -2,7 +2,7 @@
 import React from 'react';
 import { getDistance } from './point-utils';
 
-const STROKE_WIDTH = 1;
+const STROKE_WIDTH = 2;
 const CURVE_SIZE = 50;
 
 export default function Connector(props) {
@@ -17,7 +17,8 @@ export default function Connector(props) {
              ${p2.x},${p2.y}`}
         strokeWidth={STROKE_WIDTH}
         fill="none"
-        stroke="#000"
+        stroke="#888"
+        markerEnd="url(#arrow)"
       />
     );
   } else {
@@ -26,7 +27,7 @@ export default function Connector(props) {
         d={`M${p1.x},${p1.y} ${p2.x},${p2.y}`}
         strokeWidth={STROKE_WIDTH}
         fill="none"
-        stroke="#000"
+        stroke="#888"
       />
     );
   }
